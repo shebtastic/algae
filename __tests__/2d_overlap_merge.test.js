@@ -11,7 +11,7 @@ describe("merge_overlaps", () => {
     expect(actual).toStrictEqual(expected)
   })
 
-  it.skip("merges correctly for normalized entries", () => {
+  it("merges correctly for normalized entries", () => {
     const input = [[25,30], [2,19], [14, 23], [4,8]]
     const expected = [[2,23], [25,30]]
 
