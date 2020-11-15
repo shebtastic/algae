@@ -1,5 +1,5 @@
 const { describe, it, expect } = require("@jest/globals");
-const { hasOverlap, merge_overlaps } = require("../2d_overlap_merge")
+const { hasOverlap, merge_overlaps } = require("../1d_overlap_merge")
 
 describe("merge_overlaps", () => {
   const randomInt = (int) => Math.floor(Math.random * int)
