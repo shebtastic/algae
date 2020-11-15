@@ -2,6 +2,8 @@ const { describe, it, expect } = require("@jest/globals");
 const { hasOverlap, merge_overlaps } = require("../2d_overlap_merge")
 
 describe("merge_overlaps", () => {
+  const randomInt = (int) => Math.floor(Math.random * int)
+
   it("defaults to an empty array", () => {
     const input = undefined
     const expected = []
@@ -58,15 +60,17 @@ describe("merge_overlaps", () => {
   })
 
   it("runs acceptably fast for larger inputs", () => {
-    const randomInt = (int) => Math.floor(Math.random * int)
-    const original_input = Array.from({ length: 100000 }, () => { const end = randomInt(100000); return [randomInt(end), end] })
+    const input = Array.from({ length: 1000000 }, () => { const end = randomInt(1000000); return [randomInt(end), end] })
+    const expected = 1000
 
-    const expected = merge_overlaps(original_input)
-    const actual = merge_overlaps(expected)
+    const startTime = Date.now()
+    merge_overlaps(input)
+    const endTime = Date.now()
+    const actual = endTime - startTime
 
-    expect(actual).toStrictEqual(expected)
-
+    expect(actual).toBeLessThan(expected)
   })
+
   it.todo("paralellizes well")
 })
 
