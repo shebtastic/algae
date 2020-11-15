@@ -22,7 +22,7 @@ const range_length = ([start, end]) => end - start
 const merge = ([start_a, end_a], [start_b, end_b]) => [Math.min(start_a, start_b), Math.max(end_a, end_b)]
 
 const hasOverlap = ([start_a, end_a], [start_b, end_b]) => (
-  range_length([Math.min(start_a, start_b), Math.max(end_a, end_b)]) < range_length([start_a, end_a]) + range_length([start_b, end_b])
+  range_length([Math.min(start_a, start_b), Math.max(end_a, end_b)]) <= range_length([start_a, end_a]) + range_length([start_b, end_b])
 )
 
 module.exports = {

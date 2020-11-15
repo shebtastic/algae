@@ -21,8 +21,17 @@ describe("merge_overlaps", () => {
   })
 
   it("merges correctly for normalized entries", () => {
-    const input = [[25,30], [2,19], [14, 23], [4,8]]
-    const expected = [[2,23], [25,30]]
+    const input = [[25, 30], [2, 19], [14, 23], [4, 8]]
+    const expected = [[2, 23], [25, 30]]
+
+    const actual = merge_overlaps(input)
+
+    expect(actual).toStrictEqual(expected)
+  })
+
+  it("considers zero length ranges to be valid", () => {
+    const input = [[3, 10], [95, 95], [21, 61], [0, 2], [14, 22], [0, 0], [41, 66], [34, 79], [18, 95], [66, 67], [31, 52]]
+    const expected = [[0, 2], [3, 10], [14, 95]]
 
     const actual = merge_overlaps(input)
 
@@ -30,18 +39,24 @@ describe("merge_overlaps", () => {
   })
 
   it("is idempotent", () => {
-    const original_input = [[3,6],[13,20],[7,10],[6,11],[1,12],[0,9],[0,1],[3,12],[0,5],[6,17],[16,22],[0,1],[4,17],[5,10],[10,20],[3,5],[7,12],[2,5],[8,11],[5,16]]
-    const expected = [[2,23], [25,30]]
+    const original_input = [[3, 10], [21, 61], [0, 2], [14, 22], [0, 0], [41, 66], [34, 79], [18, 95], [66, 67], [31, 52]]
+    const expected = [[0, 2], [3, 10], [14, 95]]
 
     const input = merge_overlaps(original_input)
     const actual = merge_overlaps(input)
 
-    expect(actual).toStrictEqual(expected) 
+    expect(actual).toStrictEqual(expected)
   })
 
-  it.todo("runs acceptably fast for larger inputs", () => {
-    const original_input = Array.from({length: 1000}, () => { const end = randomInt(10000); return [randomInt(end), end]})
-    
+  it("runs acceptably fast for larger inputs", () => {
+    const randomInt = (int) => Math.floor(Math.random * int)
+    const original_input = Array.from({ length: 100000 }, () => { const end = randomInt(100000); return [randomInt(end), end] })
+
+    const expected = merge_overlaps(original_input)
+    const actual = merge_overlaps(expected)
+
+    expect(actual).toStrictEqual(expected)
+
   })
   it.todo("does not mutate input")
   it.todo("paralellizes well")
