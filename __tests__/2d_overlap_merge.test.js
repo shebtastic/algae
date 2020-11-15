@@ -48,6 +48,15 @@ describe("merge_overlaps", () => {
     expect(actual).toStrictEqual(expected)
   })
 
+  it("does not mutate input", () => {
+    const input = [[3, 10], [21, 61], [0, 2], [14, 22], [0, 0], [41, 66], [34, 79], [18, 95], [66, 67], [31, 52]]
+    const expected = JSON.parse(JSON.stringify(input))
+
+    merge_overlaps(input)
+
+    expect(input).toStrictEqual(expected)
+  })
+
   it("runs acceptably fast for larger inputs", () => {
     const randomInt = (int) => Math.floor(Math.random * int)
     const original_input = Array.from({ length: 100000 }, () => { const end = randomInt(100000); return [randomInt(end), end] })
@@ -58,7 +67,6 @@ describe("merge_overlaps", () => {
     expect(actual).toStrictEqual(expected)
 
   })
-  it.todo("does not mutate input")
   it.todo("paralellizes well")
 })
 
